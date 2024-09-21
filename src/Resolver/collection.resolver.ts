@@ -1,0 +1,49 @@
+import { Mutation, Arg, Ctx, Resolver, Query } from "type-graphql";
+import { Collection } from "../model/collection";
+import { CollectionService } from "../Service/collection.service";
+import { CreateCollectionInput, DeleteCollectionInput, GetCollectionInput, UpdateCollectionInput } from "../Input/collection.input";
+import { AllCollectionResponse, CollectionResponse } from "../types/collection.type";
+import { IResponse } from "../types/response.type";
+
+@Resolver()
+export default class CollectionResolver {
+    constructor(private readonly collectionService: CollectionService) {
+        this.collectionService = new CollectionService();
+    }
+
+    @Mutation(() => Collection)
+    createCollection(
+        @Arg("CreateCollectionInput") input: CreateCollectionInput,
+    ) {
+        return this.collectionService.createCollection(input);
+    }
+
+    @Mutation(() => IResponse)
+    deleteCollection(
+        @Arg("DeleteCollectionInput") input: DeleteCollectionInput,
+    ) {
+        return this.collectionService.deleteCollection(input);
+    }
+
+    @Mutation(() => CollectionResponse)
+    updateCollection(
+        @Arg("UpdateCollectionInput") input: UpdateCollectionInput,
+    ): Promise<CollectionResponse> {
+        return this.collectionService.updateCollection(input);
+    }
+
+    @Query(() => AllCollectionResponse, { nullable: true })
+    getListCollection(): Promise<AllCollectionResponse> {
+        return this.collectionService.findAllCollection()
+    }
+
+    @Query(() => CollectionResponse, { nullable: true })
+    getCollection(@Arg("GetCollectionInput") input: GetCollectionInput): Promise<CollectionResponse> {
+        return this.collectionService.findSingleCollection(input);
+    }
+
+    @Query(() => String, { nullable: true })
+    getCollectionTitle(@Arg("_id") _id: string): Promise<String> {
+        return this.collectionService.titleCollection(_id);
+    }
+}
