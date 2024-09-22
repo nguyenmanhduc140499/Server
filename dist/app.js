@@ -34,12 +34,14 @@ const main = async () => {
             (0, apollo_server_core_1.ApolloServerPluginDrainHttpServer)({ httpServer }),
             apollo_server_core_1.ApolloServerPluginLandingPageGraphQLPlayground,
         ],
+        introspection: true
     });
     await server.start();
+    server.applyMiddleware({ app, path: '/graphql' });
     //apply middleware
     server.applyMiddleware({ app, cors: { origin: [process.env.ECOMMERCE_ADMIN_URL, process.env.ECOMMERCE_STORE_URL], credentials: true, methods: 'GET,POST' } });
     //await app.listen()
-    app.listen({ port: process.env.POST }, () => {
+    app.listen({ port: process.env.PORT || 4000 }, () => {
         console.log(`App is listening on ${process.env.GRAPHQL_URL}${server.graphqlPath}`);
     });
     //connect to db
