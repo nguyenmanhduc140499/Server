@@ -24,7 +24,7 @@ const main = async () => {
   //init Express
   const app = express();
   app.options('*', cors()); // Allow preflight requests for all routes
-  app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3001'], credentials: true, methods: 'GET,POST' }))
+  app.use(cors({ origin: [process.env.ECOMMERCE_ADMIN_URL, process.env.ECOMMERCE_STORE_URL], credentials: true, methods: 'GET,POST' }))
   app.use(cookieParser());
 
   //create Apollo Server
@@ -39,11 +39,11 @@ const main = async () => {
 
   await server.start();
   //apply middleware
-  server.applyMiddleware({ app, cors: { origin: ['http://localhost:3000', 'http://localhost:3001'], credentials: true, methods: 'GET,POST' } });
+  server.applyMiddleware({ app, cors: { origin: [process.env.ECOMMERCE_ADMIN_URL, process.env.ECOMMERCE_STORE_URL], credentials: true, methods: 'GET,POST' } });
   //await app.listen()
   app.listen({ port: 4000 }, () => {
     console.log(
-      `App is listening on http://localhost:4000${server.graphqlPath}`
+      `App is listening on ${process.env.GRAPHQL_URL}${server.graphqlPath}`
     );
   });
   //connect to db
