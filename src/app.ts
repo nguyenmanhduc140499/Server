@@ -41,7 +41,7 @@ const main = async () => {
   //apply middleware
   server.applyMiddleware({ app, cors: { origin: [process.env.ECOMMERCE_ADMIN_URL, process.env.ECOMMERCE_STORE_URL], credentials: true, methods: 'GET,POST' } });
   //await app.listen()
-  app.listen({ port: 4000 }, () => {
+  app.listen({ port: process.env.POST }, () => {
     console.log(
       `App is listening on ${process.env.GRAPHQL_URL}${server.graphqlPath}`
     );
