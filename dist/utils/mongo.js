@@ -7,7 +7,7 @@ exports.connectToMongo = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 async function connectToMongo() {
     try {
-        await mongoose_1.default.connect("mongodb://127.0.0.1:27017/TutorialProject");
+        await mongoose_1.default.connect(process.env.MONGODB_URL);
         console.log("Connected to Database");
     }
     catch (error) {

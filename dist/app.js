@@ -24,7 +24,7 @@ const main = async () => {
     //init Express
     const app = (0, express_1.default)();
     app.options('*', (0, cors_1.default)()); // Allow preflight requests for all routes
-    app.use((0, cors_1.default)({ origin: ['http://localhost:3000', 'http://localhost:3001'], credentials: true, methods: 'GET,POST' }));
+    app.use((0, cors_1.default)({ origin: [process.env.ECOMMERCE_ADMIN_URL, process.env.ECOMMERCE_STORE_URL], credentials: true, methods: 'GET,POST' }));
     app.use((0, cookie_parser_1.default)());
     //create Apollo Server
     const httpServer = (0, http_1.createServer)(app);
@@ -37,10 +37,10 @@ const main = async () => {
     });
     await server.start();
     //apply middleware
-    server.applyMiddleware({ app, cors: { origin: ['http://localhost:3000', 'http://localhost:3001'], credentials: true, methods: 'GET,POST' } });
+    server.applyMiddleware({ app, cors: { origin: [process.env.ECOMMERCE_ADMIN_URL, process.env.ECOMMERCE_STORE_URL], credentials: true, methods: 'GET,POST' } });
     //await app.listen()
-    app.listen({ port: 4000 }, () => {
-        console.log(`App is listening on http://localhost:4000${server.graphqlPath}`);
+    app.listen({ port: process.env.POST }, () => {
+        console.log(`App is listening on ${process.env.GRAPHQL_URL}${server.graphqlPath}`);
     });
     //connect to db
     (0, mongo_1.connectToMongo)();
