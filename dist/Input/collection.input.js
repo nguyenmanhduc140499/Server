@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteCollectionInput = exports.GetCollectionInput = exports.UpdateCollectionInput = exports.CreateCollectionInput = void 0;
+exports.UpdateProductCollectionInput = exports.DeleteCollectionInput = exports.GetCollectionInput = exports.UpdateCollectionInput = exports.CreateCollectionInput = void 0;
 const type_graphql_1 = require("type-graphql");
 let CreateCollectionInput = class CreateCollectionInput {
 };
@@ -63,4 +63,18 @@ DeleteCollectionInput = __decorate([
     (0, type_graphql_1.InputType)()
 ], DeleteCollectionInput);
 exports.DeleteCollectionInput = DeleteCollectionInput;
+let UpdateProductCollectionInput = class UpdateProductCollectionInput extends DeleteCollectionInput {
+};
+__decorate([
+    (0, type_graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], UpdateProductCollectionInput.prototype, "productId", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], UpdateProductCollectionInput.prototype, "status", void 0);
+UpdateProductCollectionInput = __decorate([
+    (0, type_graphql_1.InputType)()
+], UpdateProductCollectionInput);
+exports.UpdateProductCollectionInput = UpdateProductCollectionInput;
 //# sourceMappingURL=collection.input.js.map

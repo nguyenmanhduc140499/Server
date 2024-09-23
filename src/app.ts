@@ -13,18 +13,27 @@ import { resolvers } from "./Resolver";
 import cookieParser from "cookie-parser";
 import { connectToMongo } from "./utils/mongo";
 import { createServer } from "http";
-import cors from 'cors'
+import cors from "cors";
+
 const main = async () => {
   //build schema
   const schema = await buildSchemaSync({
     validate: false,
     resolvers,
   });
-
   //init Express
   const app = express();
-  app.options('*', cors()); // Allow preflight requests for all routes
-  app.use(cors({ origin: [process.env.ECOMMERCE_ADMIN_URL, process.env.ECOMMERCE_STORE_URL], credentials: true, methods: 'GET,POST' }))
+  app.options("*", cors()); // Allow preflight requests for all routes
+  app.use(
+    cors({
+      origin: [
+        process.env.ECOMMERCE_STORE_URL,
+        process.env.ECOMMERCE_ADMIN_URL,
+      ],
+      credentials: true,
+      methods: "GET,POST",
+    })
+  );
   app.use(cookieParser());
 
   //create Apollo Server
@@ -35,13 +44,23 @@ const main = async () => {
       ApolloServerPluginDrainHttpServer({ httpServer }),
       ApolloServerPluginLandingPageGraphQLPlayground,
     ],
-    introspection: true
+    introspection: true,
+    cache: "bounded",
   });
 
   await server.start();
-  server.applyMiddleware({ app, path: '/graphql' });
   //apply middleware
-  server.applyMiddleware({ app, cors: { origin: [process.env.ECOMMERCE_ADMIN_URL, process.env.ECOMMERCE_STORE_URL], credentials: true, methods: 'GET,POST' } });
+  server.applyMiddleware({
+    app,
+    cors: {
+      origin: [
+        process.env.ECOMMERCE_ADMIN_URL,
+        process.env.ECOMMERCE_STORE_URL,
+      ],
+      credentials: true,
+      methods: "GET,POST",
+    },
+  });
   //await app.listen()
   app.listen({ port: process.env.PORT || 4000 }, () => {
     console.log(

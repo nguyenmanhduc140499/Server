@@ -32,6 +32,9 @@ let CollectionResolver = class CollectionResolver {
     updateCollection(input) {
         return this.collectionService.updateCollection(input);
     }
+    updateProductCollection(input) {
+        return this.collectionService.updateProductCollection(input);
+    }
     getListCollection() {
         return this.collectionService.findAllCollection();
     }
@@ -63,6 +66,13 @@ __decorate([
     __metadata("design:paramtypes", [collection_input_1.UpdateCollectionInput]),
     __metadata("design:returntype", Promise)
 ], CollectionResolver.prototype, "updateCollection", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => collection_type_1.CollectionResponse),
+    __param(0, (0, type_graphql_1.Arg)("UpdateProductCollectionInput")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [collection_input_1.UpdateProductCollectionInput]),
+    __metadata("design:returntype", Promise)
+], CollectionResolver.prototype, "updateProductCollection", null);
 __decorate([
     (0, type_graphql_1.Query)(() => collection_type_1.AllCollectionResponse, { nullable: true }),
     __metadata("design:type", Function),

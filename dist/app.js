@@ -23,8 +23,15 @@ const main = async () => {
     });
     //init Express
     const app = (0, express_1.default)();
-    app.options('*', (0, cors_1.default)()); // Allow preflight requests for all routes
-    app.use((0, cors_1.default)({ origin: [process.env.ECOMMERCE_ADMIN_URL, process.env.ECOMMERCE_STORE_URL], credentials: true, methods: 'GET,POST' }));
+    app.options("*", (0, cors_1.default)()); // Allow preflight requests for all routes
+    app.use((0, cors_1.default)({
+        origin: [
+            process.env.ECOMMERCE_STORE_URL,
+            process.env.ECOMMERCE_ADMIN_URL,
+        ],
+        credentials: true,
+        methods: "GET,POST",
+    }));
     app.use((0, cookie_parser_1.default)());
     //create Apollo Server
     const httpServer = (0, http_1.createServer)(app);
@@ -34,12 +41,22 @@ const main = async () => {
             (0, apollo_server_core_1.ApolloServerPluginDrainHttpServer)({ httpServer }),
             apollo_server_core_1.ApolloServerPluginLandingPageGraphQLPlayground,
         ],
-        introspection: true
+        introspection: true,
+        cache: "bounded",
     });
     await server.start();
-    server.applyMiddleware({ app, path: '/graphql' });
     //apply middleware
-    server.applyMiddleware({ app, cors: { origin: [process.env.ECOMMERCE_ADMIN_URL, process.env.ECOMMERCE_STORE_URL], credentials: true, methods: 'GET,POST' } });
+    server.applyMiddleware({
+        app,
+        cors: {
+            origin: [
+                process.env.ECOMMERCE_ADMIN_URL,
+                process.env.ECOMMERCE_STORE_URL,
+            ],
+            credentials: true,
+            methods: "GET,POST",
+        },
+    });
     //await app.listen()
     app.listen({ port: process.env.PORT || 4000 }, () => {
         console.log(`App is listening on ${process.env.GRAPHQL_URL}${server.graphqlPath}`);

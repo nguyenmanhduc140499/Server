@@ -32,3 +32,12 @@ export class DeleteCollectionInput {
     @Field(() => String)
     _id: String;
 }
+
+@InputType()
+export class UpdateProductCollectionInput extends DeleteCollectionInput {
+    @Field(() => String)
+    productId: String;
+
+    @Field(() => String)
+    status: String;
+}

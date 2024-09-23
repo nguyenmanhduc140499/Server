@@ -4,9 +4,9 @@
   "main": "dist/app.js",
   "type": "modules",
   "scripts": {
-    "start": "nodemon dist/app.js",
+    "start": "set NODE_ENV=development && nodemon dist/app.js",
     "build": "tsc",
-    "dev": "tsc --watch & nodemon dist/app.js"
+    "dev": "set NODE_ENV=development && tsc --watch & nodemon dist/app.js"
   },
   "license": "MIT",
   "dependencies": {

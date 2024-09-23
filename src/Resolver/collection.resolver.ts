@@ -1,7 +1,7 @@
 import { Mutation, Arg, Ctx, Resolver, Query } from "type-graphql";
 import { Collection } from "../model/collection";
 import { CollectionService } from "../Service/collection.service";
-import { CreateCollectionInput, DeleteCollectionInput, GetCollectionInput, UpdateCollectionInput } from "../Input/collection.input";
+import { CreateCollectionInput, DeleteCollectionInput, GetCollectionInput, UpdateCollectionInput, UpdateProductCollectionInput } from "../Input/collection.input";
 import { AllCollectionResponse, CollectionResponse } from "../types/collection.type";
 import { IResponse } from "../types/response.type";
 
@@ -30,6 +30,13 @@ export default class CollectionResolver {
         @Arg("UpdateCollectionInput") input: UpdateCollectionInput,
     ): Promise<CollectionResponse> {
         return this.collectionService.updateCollection(input);
+    }
+
+    @Mutation(() => CollectionResponse)
+    updateProductCollection(
+        @Arg("UpdateProductCollectionInput") input: UpdateProductCollectionInput,
+    ): Promise<CollectionResponse> {
+        return this.collectionService.updateProductCollection(input);
     }
 
     @Query(() => AllCollectionResponse, { nullable: true })

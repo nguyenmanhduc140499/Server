@@ -3,6 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CollectionService = void 0;
 const collection_1 = require("../model/collection");
 const product_1 = require("../model/product");
+var UpdateProductFlagEnum;
+(function (UpdateProductFlagEnum) {
+    UpdateProductFlagEnum["ADD"] = "ADD";
+    UpdateProductFlagEnum["REMOVE"] = "REMOVE";
+})(UpdateProductFlagEnum || (UpdateProductFlagEnum = {}));
 class CollectionService {
     async createCollection(input) {
         if (!input.title || !input.image) {
@@ -79,12 +84,63 @@ class CollectionService {
             title: input.title,
             description: input.description,
             image: input.image,
-        }, { new: true }).populate('products');
+        }, { new: true }).populate("products");
         return {
             code: 200,
             success: true,
             collection: updateCollection,
         };
+    }
+    async updateProductCollection(input) {
+        try {
+            const existCollection = await collection_1.CollectionModel.findById(input._id);
+            if (!existCollection) {
+                return {
+                    code: 400,
+                    success: false,
+                    message: "Collection do not exists",
+                };
+            }
+            let condition = {};
+            const status = [
+                UpdateProductFlagEnum.ADD,
+                UpdateProductFlagEnum.REMOVE,
+            ];
+            if (!status.includes(input.status)) {
+                return {
+                    code: 400,
+                    success: false,
+                    message: "Action update is invalid",
+                };
+            }
+            const isProductExist = existCollection.products.filter(item => JSON.parse(JSON.stringify(item._id)) === input.productId);
+            if (!isProductExist.length) {
+                return {
+                    code: 400,
+                    success: false,
+                    message: "Product is invalid",
+                };
+            }
+            if (input.status === UpdateProductFlagEnum.ADD) {
+                condition = { $push: { products: input.productId } };
+            }
+            else {
+                condition = { $pull: { products: input.productId } };
+            }
+            const collectionUpdated = await collection_1.CollectionModel.findByIdAndUpdate({ _id: input._id }, condition, { new: true }).populate("products");
+            return {
+                code: 200,
+                success: true,
+                collection: collectionUpdated,
+            };
+        }
+        catch (error) {
+            return {
+                code: 500,
+                success: false,
+                message: error.message,
+            };
+        }
     }
     async deleteCollection(input) {
         const collection = await collection_1.CollectionModel.findById({ _id: input._id });
