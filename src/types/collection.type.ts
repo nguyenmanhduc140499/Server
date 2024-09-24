@@ -12,3 +12,8 @@ export class AllCollectionResponse extends IResponse {
     @Field(() => [Collection], { nullable: true })
     listCollection?: Collection[];
 }
+@ObjectType()
+export class CollectionTitleResponse extends IResponse {
+    @Field(() => String, { nullable: true })
+    title?: string;
+}

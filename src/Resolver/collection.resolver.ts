@@ -2,7 +2,7 @@ import { Mutation, Arg, Ctx, Resolver, Query } from "type-graphql";
 import { Collection } from "../model/collection";
 import { CollectionService } from "../Service/collection.service";
 import { CreateCollectionInput, DeleteCollectionInput, GetCollectionInput, UpdateCollectionInput, UpdateProductCollectionInput } from "../Input/collection.input";
-import { AllCollectionResponse, CollectionResponse } from "../types/collection.type";
+import { AllCollectionResponse, CollectionResponse, CollectionTitleResponse } from "../types/collection.type";
 import { IResponse } from "../types/response.type";
 
 @Resolver()
@@ -49,8 +49,8 @@ export default class CollectionResolver {
         return this.collectionService.findSingleCollection(input);
     }
 
-    @Query(() => String, { nullable: true })
-    getCollectionTitle(@Arg("_id") _id: string): Promise<String> {
-        return this.collectionService.titleCollection(_id);
+    @Query(() => CollectionTitleResponse)
+    getCollectionTitle(@Arg("DeleteCollectionInput") input: DeleteCollectionInput): Promise<CollectionTitleResponse> {
+        return this.collectionService.titleCollection(input);
     }
 }

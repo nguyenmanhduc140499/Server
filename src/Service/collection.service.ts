@@ -9,6 +9,7 @@ import { CollectionModel } from "../model/collection";
 import {
   AllCollectionResponse,
   CollectionResponse,
+  CollectionTitleResponse
 } from "../types/collection.type";
 import { IResponse } from "../types/response.type";
 import { ProductModel } from "../model/product";
@@ -45,9 +46,21 @@ export class CollectionService {
     };
   }
 
-  async titleCollection(_id: string): Promise<String> {
-    const collection = await CollectionModel.findById(_id, { title: 1 });
-    return collection.title;
+  async titleCollection(input: DeleteCollectionInput): Promise<CollectionTitleResponse> {
+    try {
+      const collection = await CollectionModel.findById({ _id: input._id }, { title: 1 });
+      return {
+        code: 200,
+        success: true,
+        title: collection.title
+      };
+    } catch (error) {
+      return {
+        code: 400,
+        success: false,
+        message: "Collection does not exists"
+      }
+    }
   }
 
   async findSingleCollection(

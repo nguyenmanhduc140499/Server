@@ -41,8 +41,8 @@ let CollectionResolver = class CollectionResolver {
     getCollection(input) {
         return this.collectionService.findSingleCollection(input);
     }
-    getCollectionTitle(_id) {
-        return this.collectionService.titleCollection(_id);
+    getCollectionTitle(input) {
+        return this.collectionService.titleCollection(input);
     }
 };
 __decorate([
@@ -87,10 +87,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CollectionResolver.prototype, "getCollection", null);
 __decorate([
-    (0, type_graphql_1.Query)(() => String, { nullable: true }),
-    __param(0, (0, type_graphql_1.Arg)("_id")),
+    (0, type_graphql_1.Query)(() => collection_type_1.CollectionTitleResponse),
+    __param(0, (0, type_graphql_1.Arg)("DeleteCollectionInput")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [collection_input_1.DeleteCollectionInput]),
     __metadata("design:returntype", Promise)
 ], CollectionResolver.prototype, "getCollectionTitle", null);
 CollectionResolver = __decorate([

@@ -33,9 +33,22 @@ class CollectionService {
             listCollection: allCollection,
         };
     }
-    async titleCollection(_id) {
-        const collection = await collection_1.CollectionModel.findById(_id, { title: 1 });
-        return collection.title;
+    async titleCollection(input) {
+        try {
+            const collection = await collection_1.CollectionModel.findById({ _id: input._id }, { title: 1 });
+            return {
+                code: 200,
+                success: true,
+                title: collection.title
+            };
+        }
+        catch (error) {
+            return {
+                code: 400,
+                success: false,
+                message: "Collection does not exists"
+            };
+        }
     }
     async findSingleCollection(input) {
         const condition = {};
