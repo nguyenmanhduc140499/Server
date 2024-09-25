@@ -5,7 +5,7 @@ import {
     OrderResponse,
 } from "../types/order.type";
 import { Order, OrderModel } from "../model/order";
-import { Product, ProductModel } from "../model/product";
+import { ProductModel } from "../model/product";
 import { format } from "date-fns";
 import { toZonedTime } from 'date-fns-tz';
 

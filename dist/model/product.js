@@ -9,9 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductModel = exports.Product = void 0;
+exports.ProductModel = exports.Product = exports.ProductStatus = void 0;
 const type_graphql_1 = require("type-graphql");
 const typegoose_1 = require("@typegoose/typegoose");
+var ProductStatus;
+(function (ProductStatus) {
+    ProductStatus["DISCONTINUED"] = "DISCONTINUED";
+    ProductStatus["INUSE"] = "INUSE";
+})(ProductStatus = exports.ProductStatus || (exports.ProductStatus = {}));
 let Product = class Product {
 };
 __decorate([
@@ -68,6 +73,11 @@ __decorate([
     (0, typegoose_1.Prop)({ type: () => [String] }),
     __metadata("design:type", Array)
 ], Product.prototype, "colors", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => String, { nullable: true }),
+    (0, typegoose_1.Prop)({ default: ProductStatus.INUSE }),
+    __metadata("design:type", String)
+], Product.prototype, "status", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => Date, { nullable: true }),
     __metadata("design:type", Date)

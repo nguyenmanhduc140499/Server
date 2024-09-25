@@ -6,6 +6,10 @@ import {
   Prop,
 } from "@typegoose/typegoose";
 
+export enum ProductStatus {
+  DISCONTINUED = "DISCONTINUED",
+  INUSE = "INUSE"
+}
 @ObjectType()
 @modelOptions({ schemaOptions: { collection: "products", timestamps: true } })
 export class Product {
@@ -51,6 +55,10 @@ export class Product {
   @Field(() => [String], { nullable: true })
   @Prop({ type: () => [String] })
   colors?: string[];
+
+  @Field(() => String, { nullable: true })
+  @Prop({ default: ProductStatus.INUSE })
+  status?: string;
 
   @Field(() => Date, { nullable: true })
   createdAt?: Date;

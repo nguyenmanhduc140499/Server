@@ -5,7 +5,7 @@ import {
   GetProductInput,
   UpdateProductInput,
 } from "../Input/productInput";
-import { Product, ProductModel } from "../model/product";
+import { Product, ProductModel, ProductStatus } from "../model/product";
 import { AllProductResponse, ProductResponse } from "../types/product.type";
 import { checkDuplicate } from "../utils/common";
 import mongoose from "mongoose";
@@ -165,8 +165,9 @@ export class ProductService {
         { new: true }
       );
     }
-
-    await ProductModel.deleteOne({ _id: product._id });
+    //discontinued product
+    await ProductModel.updateOne({ _id: product._id }, { status: ProductStatus.DISCONTINUED }, { new: true })
+    // await ProductModel.deleteOne({ _id: product._id });
     return {
       code: 200,
       success: true,
@@ -177,10 +178,15 @@ export class ProductService {
   async findProductByQuery(input: string): Promise<AllProductResponse> {
     try {
       const productsData = await ProductModel.find({
-        $or: [
-          { title: { $regex: input, $options: "i" } },
-          { category: { $regex: input, $options: "i" } },
-          { tags: { $in: [new RegExp(input, "i")] } }
+        $and: [
+          { status: ProductStatus.INUSE },
+          {
+            $or: [
+              { title: { $regex: input, $options: "i" } },
+              { category: { $regex: input, $options: "i" } },
+              { tags: { $in: [new RegExp(input, "i")] } }
+            ]
+          }
         ]
       })
       return {
@@ -199,7 +205,7 @@ export class ProductService {
 
   async getRelatedProduct(mainProductId: string): Promise<AllProductResponse> {
     try {
-      const product = await ProductModel.findById({ _id: mainProductId }, { _id: 1, category: 1, collections: 1 })
+      const product = await ProductModel.findById({ _id: mainProductId, status: ProductStatus.INUSE }, { _id: 1, category: 1, collections: 1 })
       if (!product) {
         return {
           code: 404,
@@ -209,6 +215,7 @@ export class ProductService {
       }
       const relatedProduct = await ProductModel.find({
         _id: { $ne: product._id },
+        status: ProductStatus.INUSE,
         $or: [
           { category: product.category },
           { collections: product.collections }
