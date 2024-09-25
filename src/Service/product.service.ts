@@ -3,6 +3,7 @@ import {
   CreateProductInput,
   DeleteProductInput,
   GetProductInput,
+  ActiveProductInput,
   UpdateProductInput,
 } from "../Input/productInput";
 import { Product, ProductModel, ProductStatus } from "../model/product";
@@ -150,29 +151,48 @@ export class ProductService {
   }
 
   async deleteProduct(input: DeleteProductInput): Promise<IResponse> {
-    const product = await ProductModel.findById({ _id: input._id });
-    if (!product) {
+    try {
+      const product = await ProductModel.findById({ _id: input._id });
+      if (!product) {
+        return {
+          code: 400,
+          success: false,
+          message: "Collection does not exist",
+        };
+      }
+
+      //discontinued product
+      await ProductModel.updateOne({ _id: product._id }, { status: ProductStatus.DISCONTINUED }, { new: true })
+      return {
+        code: 200,
+        success: true,
+        message: "Done",
+      };
+    } catch (error) {
       return {
         code: 400,
         success: false,
-        message: "Collection does not exist",
+        message: error.message
+      }
+    }
+  }
+
+  async activeProduct(input: ActiveProductInput): Promise<IResponse> {
+    //Active product
+    try {
+      await ProductModel.findOneAndUpdate({ _id: input._id }, { status: ProductStatus.INUSE }, { new: true })
+      return {
+        code: 200,
+        success: true,
+        message: "Done",
       };
+    } catch (error) {
+      return {
+        code: 400,
+        success: false,
+        message: error.message
+      }
     }
-    if (product.collections.length) {
-      await CollectionModel.updateMany(
-        { products: product._id },
-        { $pull: { products: product._id } },
-        { new: true }
-      );
-    }
-    //discontinued product
-    await ProductModel.updateOne({ _id: product._id }, { status: ProductStatus.DISCONTINUED }, { new: true })
-    // await ProductModel.deleteOne({ _id: product._id });
-    return {
-      code: 200,
-      success: true,
-      message: "Done",
-    };
   }
 
   async findProductByQuery(input: string): Promise<AllProductResponse> {

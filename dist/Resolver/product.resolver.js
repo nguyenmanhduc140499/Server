@@ -31,6 +31,9 @@ let ProductResolver = class ProductResolver {
     deleteProduct(input) {
         return this.productService.deleteProduct(input);
     }
+    activeProduct(input) {
+        return this.productService.activeProduct(input);
+    }
     getListProduct() {
         return this.productService.findAllProduct();
     }
@@ -65,6 +68,13 @@ __decorate([
     __metadata("design:paramtypes", [productInput_1.DeleteProductInput]),
     __metadata("design:returntype", void 0)
 ], ProductResolver.prototype, "deleteProduct", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => response_type_1.IResponse),
+    __param(0, (0, type_graphql_1.Arg)("ActiveProductInput")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [productInput_1.ActiveProductInput]),
+    __metadata("design:returntype", void 0)
+], ProductResolver.prototype, "activeProduct", null);
 __decorate([
     (0, type_graphql_1.Query)(() => product_type_1.AllProductResponse, { nullable: true }),
     __metadata("design:type", Function),

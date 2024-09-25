@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteProductInput = exports.GetProductInput = exports.UpdateProductInput = exports.CreateProductInput = void 0;
+exports.ActiveProductInput = exports.DeleteProductInput = exports.GetProductInput = exports.UpdateProductInput = exports.CreateProductInput = void 0;
 const class_validator_1 = require("class-validator");
 const type_graphql_1 = require("type-graphql");
 let CreateProductInput = class CreateProductInput {
@@ -92,4 +92,10 @@ DeleteProductInput = __decorate([
     (0, type_graphql_1.InputType)()
 ], DeleteProductInput);
 exports.DeleteProductInput = DeleteProductInput;
+let ActiveProductInput = class ActiveProductInput extends DeleteProductInput {
+};
+ActiveProductInput = __decorate([
+    (0, type_graphql_1.InputType)()
+], ActiveProductInput);
+exports.ActiveProductInput = ActiveProductInput;
 //# sourceMappingURL=productInput.js.map

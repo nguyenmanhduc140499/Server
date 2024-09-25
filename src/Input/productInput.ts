@@ -61,3 +61,5 @@ export class DeleteProductInput {
   @Field(() => String)
   _id: String;
 }
+@InputType()
+export class ActiveProductInput extends DeleteProductInput { }

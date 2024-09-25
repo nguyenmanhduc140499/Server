@@ -1,5 +1,5 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
-import { CreateProductInput, DeleteProductInput, GetProductInput, UpdateProductInput } from "../Input/productInput";
+import { CreateProductInput, DeleteProductInput, ActiveProductInput, GetProductInput, UpdateProductInput } from "../Input/productInput";
 import { ProductService } from "../Service/product.service";
 import { AllProductResponse, ProductResponse } from "../types/product.type";
 import { IResponse } from "../types/response.type";
@@ -29,6 +29,13 @@ export default class ProductResolver {
     @Arg("DeleteProductInput") input: DeleteProductInput,
   ) {
     return this.productService.deleteProduct(input);
+  }
+
+  @Mutation(() => IResponse)
+  activeProduct(
+    @Arg("ActiveProductInput") input: ActiveProductInput,
+  ) {
+    return this.productService.activeProduct(input);
   }
 
   @Query(() => AllProductResponse, { nullable: true })

@@ -129,25 +129,48 @@ class ProductService {
         }
     }
     async deleteProduct(input) {
-        const product = await product_1.ProductModel.findById({ _id: input._id });
-        if (!product) {
+        try {
+            const product = await product_1.ProductModel.findById({ _id: input._id });
+            if (!product) {
+                return {
+                    code: 400,
+                    success: false,
+                    message: "Collection does not exist",
+                };
+            }
+            //discontinued product
+            await product_1.ProductModel.updateOne({ _id: product._id }, { status: product_1.ProductStatus.DISCONTINUED }, { new: true });
+            return {
+                code: 200,
+                success: true,
+                message: "Done",
+            };
+        }
+        catch (error) {
             return {
                 code: 400,
                 success: false,
-                message: "Collection does not exist",
+                message: error.message
             };
         }
-        if (product.collections.length) {
-            await collection_1.CollectionModel.updateMany({ products: product._id }, { $pull: { products: product._id } }, { new: true });
+    }
+    async activeProduct(input) {
+        //Active product
+        try {
+            await product_1.ProductModel.findOneAndUpdate({ _id: input._id }, { status: product_1.ProductStatus.INUSE }, { new: true });
+            return {
+                code: 200,
+                success: true,
+                message: "Done",
+            };
         }
-        //discontinued product
-        await product_1.ProductModel.updateOne({ _id: product._id }, { status: product_1.ProductStatus.DISCONTINUED }, { new: true });
-        // await ProductModel.deleteOne({ _id: product._id });
-        return {
-            code: 200,
-            success: true,
-            message: "Done",
-        };
+        catch (error) {
+            return {
+                code: 400,
+                success: false,
+                message: error.message
+            };
+        }
     }
     async findProductByQuery(input) {
         try {
