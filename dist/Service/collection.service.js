@@ -10,14 +10,28 @@ var UpdateProductFlagEnum;
 })(UpdateProductFlagEnum || (UpdateProductFlagEnum = {}));
 class CollectionService {
     async createCollection(input) {
-        if (!input.title || !input.image) {
+        try {
+            if (!input.title || !input.image) {
+                return {
+                    code: 400,
+                    success: false,
+                    message: "Title and image must be required",
+                };
+            }
+            const newCollection = await collection_1.CollectionModel.create(input);
+            return {
+                code: 200,
+                success: true,
+                collection: newCollection
+            };
+        }
+        catch (error) {
             return {
                 code: 400,
                 success: false,
-                message: "Title and image must be required",
+                message: error.message
             };
         }
-        return await collection_1.CollectionModel.create(input);
     }
     async findAllCollection() {
         const allCollection = await collection_1.CollectionModel.find().populate("products");
@@ -97,6 +111,7 @@ class CollectionService {
             title: input.title,
             description: input.description,
             image: input.image,
+            banner: input.banner
         }, { new: true }).populate("products");
         return {
             code: 200,

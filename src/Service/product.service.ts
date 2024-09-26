@@ -238,7 +238,7 @@ export class ProductService {
         status: ProductStatus.INUSE,
         $or: [
           { category: product.category },
-          { collections: product.collections }
+          { collections: { $in: product.collections } }
         ]
       })
 

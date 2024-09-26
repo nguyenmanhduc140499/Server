@@ -215,7 +215,7 @@ class ProductService {
                 status: product_1.ProductStatus.INUSE,
                 $or: [
                     { category: product.category },
-                    { collections: product.collections }
+                    { collections: { $in: product.collections } }
                 ]
             });
             if (!relatedProduct || !relatedProduct.length) {

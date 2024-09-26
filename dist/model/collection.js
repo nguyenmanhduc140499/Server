@@ -35,6 +35,11 @@ __decorate([
     __metadata("design:type", String)
 ], Collection.prototype, "image", void 0);
 __decorate([
+    (0, type_graphql_1.Field)(() => String),
+    (0, typegoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Collection.prototype, "banner", void 0);
+__decorate([
     (0, type_graphql_1.Field)(() => [product_1.Product], { nullable: true, defaultValue: [] }),
     (0, typegoose_1.Prop)({ ref: () => product_1.Product }),
     __metadata("design:type", Array)

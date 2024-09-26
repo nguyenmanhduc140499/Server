@@ -5,11 +5,14 @@ export class CreateCollectionInput {
     @Field(() => String)
     title: string;
 
-    @Field(() => String, { nullable: true })
-    description?: string
+    @Field(() => String)
+    banner: string;
 
     @Field(() => String)
     image: string
+
+    @Field(() => String, { nullable: true })
+    description?: string
 }
 
 @InputType()

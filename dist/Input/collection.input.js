@@ -18,13 +18,17 @@ __decorate([
     __metadata("design:type", String)
 ], CreateCollectionInput.prototype, "title", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(() => String, { nullable: true }),
+    (0, type_graphql_1.Field)(() => String),
     __metadata("design:type", String)
-], CreateCollectionInput.prototype, "description", void 0);
+], CreateCollectionInput.prototype, "banner", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     __metadata("design:type", String)
 ], CreateCollectionInput.prototype, "image", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", String)
+], CreateCollectionInput.prototype, "description", void 0);
 CreateCollectionInput = __decorate([
     (0, type_graphql_1.InputType)()
 ], CreateCollectionInput);

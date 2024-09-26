@@ -11,10 +11,10 @@ export default class CollectionResolver {
         this.collectionService = new CollectionService();
     }
 
-    @Mutation(() => Collection)
+    @Mutation(() => CollectionResponse)
     createCollection(
         @Arg("CreateCollectionInput") input: CreateCollectionInput,
-    ) {
+    ): Promise<CollectionResponse> {
         return this.collectionService.createCollection(input);
     }
 

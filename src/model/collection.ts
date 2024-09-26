@@ -26,6 +26,10 @@ export class Collection {
     @Prop({ required: true })
     image: string;
 
+    @Field(() => String)
+    @Prop({ required: true })
+    banner: string;
+
     @Field(() => [Product], { nullable: true, defaultValue: [] })
     @Prop({ ref: () => Product })
     products?: Ref<Product>[];

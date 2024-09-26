@@ -13,7 +13,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const type_graphql_1 = require("type-graphql");
-const collection_1 = require("../model/collection");
 const collection_service_1 = require("../Service/collection.service");
 const collection_input_1 = require("../Input/collection.input");
 const collection_type_1 = require("../types/collection.type");
@@ -46,11 +45,11 @@ let CollectionResolver = class CollectionResolver {
     }
 };
 __decorate([
-    (0, type_graphql_1.Mutation)(() => collection_1.Collection),
+    (0, type_graphql_1.Mutation)(() => collection_type_1.CollectionResponse),
     __param(0, (0, type_graphql_1.Arg)("CreateCollectionInput")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [collection_input_1.CreateCollectionInput]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], CollectionResolver.prototype, "createCollection", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => response_type_1.IResponse),
