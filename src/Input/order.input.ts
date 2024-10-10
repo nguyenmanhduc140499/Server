@@ -37,6 +37,12 @@ export class CreateOrderInput {
 
     @Field(() => String, { nullable: true })
     email?: string;
+
+    @Field(() => String, { nullable: true })
+    status?: string;
+
+    @Field(() => String, { nullable: true })
+    _id?: string;
 }
 
 @InputType()
@@ -44,3 +50,5 @@ export class DetailsOrderInput {
     @Field(() => String)
     orderId: string;
 }
+@InputType()
+export class ActiveOrder extends DetailsOrderInput { }

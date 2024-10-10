@@ -19,12 +19,12 @@ export class CreateProductInput {
   category: string;
 
   @IsNumber()
-  @Min(0.1)
+  @Min(1000)
   @Field(() => Number)
   price: number;
 
   @IsNumber()
-  @Min(0.1)
+  @Min(1000)
   @Field(() => Number)
   expense: number;
 

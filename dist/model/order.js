@@ -9,10 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrderModel = exports.Order = exports.OrderItemType = void 0;
+exports.OrderModel = exports.Order = exports.OrderItemType = exports.OrderStatus = void 0;
 const type_graphql_1 = require("type-graphql");
 const typegoose_1 = require("@typegoose/typegoose");
 const product_1 = require("./product");
+var OrderStatus;
+(function (OrderStatus) {
+    OrderStatus["PENDING"] = "PENDING";
+})(OrderStatus = exports.OrderStatus || (exports.OrderStatus = {}));
 let OrderItemType = class OrderItemType {
 };
 __decorate([
@@ -80,6 +84,11 @@ __decorate([
     (0, typegoose_1.Prop)(),
     __metadata("design:type", String)
 ], Order.prototype, "email", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => String, { nullable: true }),
+    (0, typegoose_1.Prop)(),
+    __metadata("design:type", String)
+], Order.prototype, "status", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => Date, { nullable: true }),
     __metadata("design:type", Object)

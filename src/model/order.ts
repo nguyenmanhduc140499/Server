@@ -8,6 +8,10 @@ import {
 import { Date, ObjectId } from "mongoose";
 import { Product } from "./product";
 
+export enum OrderStatus {
+    PENDING = "PENDING",
+}
+
 @ObjectType()
 export class OrderItemType {
     @Field(() => Product)
@@ -60,6 +64,10 @@ export class Order {
     @Field(() => String, { nullable: true })
     @Prop()
     email?: string
+
+    @Field(() => String, { nullable: true })
+    @Prop()
+    status?: string
 
     @Field(() => Date, { nullable: true })
     createdAt?: Date;

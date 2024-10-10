@@ -16,6 +16,7 @@ const type_graphql_1 = require("type-graphql");
 const order_type_1 = require("../types/order.type");
 const order_input_1 = require("../Input/order.input");
 const order_service_1 = require("../Service/order.service");
+const response_type_1 = require("../types/response.type");
 let OrderResolver = class OrderResolver {
     constructor(orderService) {
         this.orderService = orderService;
@@ -23,6 +24,9 @@ let OrderResolver = class OrderResolver {
     }
     createOrder(input) {
         return this.orderService.createOrder(input);
+    }
+    activeOrder(input) {
+        return this.orderService.activeOrder(input);
     }
     getListOrder() {
         return this.orderService.findAllOrder();
@@ -41,6 +45,13 @@ __decorate([
     __metadata("design:paramtypes", [order_input_1.CreateOrderInput]),
     __metadata("design:returntype", Promise)
 ], OrderResolver.prototype, "createOrder", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => response_type_1.IResponse),
+    __param(0, (0, type_graphql_1.Arg)("activeOrder")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [order_input_1.ActiveOrder]),
+    __metadata("design:returntype", Promise)
+], OrderResolver.prototype, "activeOrder", null);
 __decorate([
     (0, type_graphql_1.Query)(() => order_type_1.AllOrderResponse, { nullable: true }),
     __metadata("design:type", Function),

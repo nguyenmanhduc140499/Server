@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DetailsOrderInput = exports.CreateOrderInput = void 0;
+exports.ActiveOrder = exports.DetailsOrderInput = exports.CreateOrderInput = void 0;
 const type_graphql_1 = require("type-graphql");
 let OrderItemTypeInput = class OrderItemTypeInput {
 };
@@ -62,6 +62,14 @@ __decorate([
     (0, type_graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], CreateOrderInput.prototype, "email", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", String)
+], CreateOrderInput.prototype, "status", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", String)
+], CreateOrderInput.prototype, "_id", void 0);
 CreateOrderInput = __decorate([
     (0, type_graphql_1.InputType)()
 ], CreateOrderInput);
@@ -76,4 +84,10 @@ DetailsOrderInput = __decorate([
     (0, type_graphql_1.InputType)()
 ], DetailsOrderInput);
 exports.DetailsOrderInput = DetailsOrderInput;
+let ActiveOrder = class ActiveOrder extends DetailsOrderInput {
+};
+ActiveOrder = __decorate([
+    (0, type_graphql_1.InputType)()
+], ActiveOrder);
+exports.ActiveOrder = ActiveOrder;
 //# sourceMappingURL=order.input.js.map

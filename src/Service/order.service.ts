@@ -1,4 +1,9 @@
-import { CreateOrderInput, DetailsOrderInput } from "../Input/order.input";
+import { OrderStatus } from "./../model/order";
+import {
+    ActiveOrder,
+    CreateOrderInput,
+    DetailsOrderInput,
+} from "../Input/order.input";
 import {
     AllOrderResponse,
     OrderByCustomer,
@@ -7,7 +12,8 @@ import {
 import { Order, OrderModel } from "../model/order";
 import { ProductModel } from "../model/product";
 import { format } from "date-fns";
-import { toZonedTime } from 'date-fns-tz';
+import { toZonedTime } from "date-fns-tz";
+import { IResponse } from "../types/response.type";
 
 export class OrderService {
     async createOrder(input: CreateOrderInput): Promise<OrderResponse> {
@@ -23,7 +29,6 @@ export class OrderService {
                     };
                 })
             );
-
             const orderInfo: any = {
                 customerClerkId: input.customerClerkId,
                 totalAmount: input.totalAmount,
@@ -35,7 +40,19 @@ export class OrderService {
             if (input.email) {
                 orderInfo.email = input.email;
             }
-
+            if (input.status) {
+                if (input.status !== OrderStatus.PENDING) {
+                    return {
+                        code: 400,
+                        success: false,
+                        message: "Order status is invalid",
+                    };
+                }
+                orderInfo.status = input.status;
+            }
+            if (input._id) {
+                orderInfo._id = input._id;
+            }
             const newOrder = await OrderModel.create(orderInfo);
             return {
                 code: 200,
@@ -52,16 +69,18 @@ export class OrderService {
     }
 
     async findAllOrder(): Promise<AllOrderResponse> {
-
         try {
             const allOrder = await OrderModel.find(
-                {},
+                { status: { $exists: false } },
                 { _id: 1, customerName: 1, products: 1, totalAmount: 1, createdAt: 1 }
             )
                 .sort({ createdAt: -1 })
                 .exec();
             const data = allOrder.map((item: Order) => {
-                const utcDate = toZonedTime(JSON.parse(JSON.stringify(item.createdAt)), 'UTC');
+                const utcDate = toZonedTime(
+                    JSON.parse(JSON.stringify(item.createdAt)),
+                    "UTC"
+                );
                 const formatDate = format(utcDate, "MMM do, yyyy");
                 return {
                     _id: item._id.toString(),
@@ -106,7 +125,10 @@ export class OrderService {
 
     async getOrderByCustomer(customerClerkId: string): Promise<OrderByCustomer> {
         try {
-            const allOrderByCustomer = await OrderModel.find({ customerClerkId })
+            const allOrderByCustomer = await OrderModel.find({
+                customerClerkId,
+                status: { $exists: false },
+            })
                 .sort({ createdAt: -1 })
                 .populate("products.product");
             return {
@@ -117,6 +139,34 @@ export class OrderService {
         } catch (error) {
             return {
                 code: 400,
+                success: false,
+                message: error.message,
+            };
+        }
+    }
+
+    async activeOrder(input: ActiveOrder): Promise<IResponse> {
+        try {
+            const isExistsOrder = await OrderModel.findById(input.orderId);
+            if (!isExistsOrder) {
+                return {
+                    code: 400,
+                    success: false,
+                    message: "Order is not exists",
+                };
+            }
+            await OrderModel.updateOne(
+                { _id: isExistsOrder._id },
+                { $unset: { status: "" } },
+                { new: true }
+            );
+            return {
+                code: 200,
+                success: true
+            }
+        } catch (error) {
+            return {
+                code: 500,
                 success: false,
                 message: error.message,
             };

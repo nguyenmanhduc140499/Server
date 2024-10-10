@@ -28,13 +28,13 @@ __decorate([
 ], CreateProductInput.prototype, "category", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.Min)(0.1),
+    (0, class_validator_1.Min)(1000),
     (0, type_graphql_1.Field)(() => Number),
     __metadata("design:type", Number)
 ], CreateProductInput.prototype, "price", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.Min)(0.1),
+    (0, class_validator_1.Min)(1000),
     (0, type_graphql_1.Field)(() => Number),
     __metadata("design:type", Number)
 ], CreateProductInput.prototype, "expense", void 0);

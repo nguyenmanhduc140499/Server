@@ -1,7 +1,8 @@
 import { Mutation, Arg, Resolver, Query } from "type-graphql";
 import { AllOrderResponse, OrderByCustomer, OrderResponse } from "../types/order.type";
-import { CreateOrderInput, DetailsOrderInput } from "../Input/order.input";
+import { ActiveOrder, CreateOrderInput, DetailsOrderInput } from "../Input/order.input";
 import { OrderService } from "../Service/order.service";
+import { IResponse } from "../types/response.type";
 
 @Resolver()
 export default class OrderResolver {
@@ -14,6 +15,13 @@ export default class OrderResolver {
         @Arg("createOrderInput") input: CreateOrderInput
     ): Promise<OrderResponse> {
         return this.orderService.createOrder(input);
+    }
+
+    @Mutation(() => IResponse)
+    activeOrder(
+        @Arg("activeOrder") input: ActiveOrder
+    ): Promise<IResponse> {
+        return this.orderService.activeOrder(input);
     }
 
     @Query(() => AllOrderResponse, { nullable: true })
