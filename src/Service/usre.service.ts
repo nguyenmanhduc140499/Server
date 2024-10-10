@@ -19,7 +19,12 @@ export class UserService {
                     user: existedUser,
                 };
             }
-            const newUser = await UserModel.create(input);
+            const condition: any = {
+                clerkId: input.clerkId,
+                email: input.email,
+                name: input.name
+            }
+            const newUser = await UserModel.create(condition);
             return {
                 code: 200,
                 success: true,

@@ -18,7 +18,12 @@ class UserService {
                     user: existedUser,
                 };
             }
-            const newUser = await user_1.UserModel.create(input);
+            const condition = {
+                clerkId: input.clerkId,
+                email: input.email,
+                name: input.name
+            };
+            const newUser = await user_1.UserModel.create(condition);
             return {
                 code: 200,
                 success: true,
