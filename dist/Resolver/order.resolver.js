@@ -11,31 +11,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const type_graphql_1 = require("type-graphql");
 const order_type_1 = require("../types/order.type");
 const order_input_1 = require("../Input/order.input");
-const order_service_1 = require("../Service/order.service");
 const response_type_1 = require("../types/response.type");
+const typedi_1 = require("typedi");
+const createOrder_service_1 = __importDefault(require("../Service/orderServices/createOrder.service"));
+const getOrder_service_1 = __importDefault(require("../Service/orderServices/getOrder.service"));
+const activeOrder_service_1 = __importDefault(require("../Service/orderServices/activeOrder.service"));
 let OrderResolver = class OrderResolver {
-    constructor(orderService) {
-        this.orderService = orderService;
-        this.orderService = new order_service_1.OrderService();
+    constructor(createOrderService, getOrderService, activeOrderService) {
+        this.createOrderService = createOrderService;
+        this.getOrderService = getOrderService;
+        this.activeOrderService = activeOrderService;
     }
     createOrder(input) {
-        return this.orderService.createOrder(input);
+        return this.createOrderService.createOrder(input);
     }
     activeOrder(input) {
-        return this.orderService.activeOrder(input);
+        return this.activeOrderService.activeOrder(input);
     }
     getListOrder() {
-        return this.orderService.findAllOrder();
+        return this.getOrderService.findAllOrder();
     }
     getOrderByCustomer(customerClerkId) {
-        return this.orderService.getOrderByCustomer(customerClerkId);
+        return this.getOrderService.getOrderByCustomer(customerClerkId);
     }
     getOrderDetails(input) {
-        return this.orderService.getOrderDetails(input);
+        return this.getOrderService.getOrderDetails(input);
     }
 };
 __decorate([
@@ -73,8 +80,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], OrderResolver.prototype, "getOrderDetails", null);
 OrderResolver = __decorate([
+    (0, typedi_1.Service)(),
     (0, type_graphql_1.Resolver)(),
-    __metadata("design:paramtypes", [order_service_1.OrderService])
+    __metadata("design:paramtypes", [createOrder_service_1.default,
+        getOrder_service_1.default,
+        activeOrder_service_1.default])
 ], OrderResolver);
 exports.default = OrderResolver;
 //# sourceMappingURL=order.resolver.js.map
