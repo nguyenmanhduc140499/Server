@@ -11,27 +11,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const type_graphql_1 = require("type-graphql");
 const user_input_1 = require("../Input/user.input");
-const usre_service_1 = require("../Service/usre.service");
 const user_type_1 = require("../types/user.type");
+const typedi_1 = require("typedi");
+const createUser_service_1 = __importDefault(require("../Service/userServices/createUser.service"));
+const getUserDetail_service_1 = __importDefault(require("../Service/userServices/getUserDetail.service"));
+const userWishlist_service_1 = __importDefault(require("../Service/userServices/userWishlist.service"));
 let UserResolver = class UserResolver {
-    constructor(userService) {
-        this.userService = userService;
-        this.userService = new usre_service_1.UserService();
+    constructor(createUserService, getUserService, userWishlistService) {
+        this.createUserService = createUserService;
+        this.getUserService = getUserService;
+        this.userWishlistService = userWishlistService;
     }
     createUser(input) {
-        return this.userService.createUser(input);
+        return this.createUserService.createUser(input);
     }
     userWishlist(input) {
-        return this.userService.userWishlistProcess(input);
+        return this.userWishlistService.userWishlistProcess(input);
     }
     getUserDetail(input) {
-        return this.userService.getUserDetail(input);
+        return this.getUserService.getUserDetail(input);
     }
     getListUser() {
-        return this.userService.getListUser();
+        console.log("123");
+        return this.getUserService.getListUser();
     }
 };
 __decorate([
@@ -62,8 +70,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "getListUser", null);
 UserResolver = __decorate([
+    (0, typedi_1.Service)(),
     (0, type_graphql_1.Resolver)(),
-    __metadata("design:paramtypes", [usre_service_1.UserService])
+    __param(0, (0, typedi_1.Inject)(() => createUser_service_1.default)),
+    __param(1, (0, typedi_1.Inject)(() => getUserDetail_service_1.default)),
+    __param(2, (0, typedi_1.Inject)(() => userWishlist_service_1.default)),
+    __metadata("design:paramtypes", [createUser_service_1.default,
+        getUserDetail_service_1.default,
+        userWishlist_service_1.default])
 ], UserResolver);
 exports.default = UserResolver;
 //# sourceMappingURL=user.resolver.js.map
