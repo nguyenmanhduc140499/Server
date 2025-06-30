@@ -2,6 +2,10 @@ import { Field, ObjectType } from "type-graphql";
 import { Collection } from "../model/collection";
 import { IResponse } from "./response.type";
 
+export enum UpdateProductFlagEnum {
+    ADD = "ADD",
+    REMOVE = "REMOVE",
+}
 @ObjectType()
 export class CollectionResponse extends IResponse {
     @Field(() => Collection, { nullable: true })

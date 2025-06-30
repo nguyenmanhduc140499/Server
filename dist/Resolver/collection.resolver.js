@@ -11,37 +11,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const type_graphql_1 = require("type-graphql");
-const collection_service_1 = require("../Service/collection.service");
 const collection_input_1 = require("../Input/collection.input");
 const collection_type_1 = require("../types/collection.type");
 const response_type_1 = require("../types/response.type");
+const typedi_1 = require("typedi");
+const createCollection_service_1 = __importDefault(require("../Service/collectionServices/createCollection.service"));
+const deleteCollection_service_1 = __importDefault(require("../Service/collectionServices/deleteCollection.service"));
+const getCollection_service_1 = __importDefault(require("../Service/collectionServices/getCollection.service"));
+const updateCollection_service_1 = __importDefault(require("../Service/collectionServices/updateCollection.service"));
 let CollectionResolver = class CollectionResolver {
-    constructor(collectionService) {
-        this.collectionService = collectionService;
-        this.collectionService = new collection_service_1.CollectionService();
+    constructor(createCollectionService, updateCollectionService, getCollectionService, deleteCollectionService) {
+        this.createCollectionService = createCollectionService;
+        this.updateCollectionService = updateCollectionService;
+        this.getCollectionService = getCollectionService;
+        this.deleteCollectionService = deleteCollectionService;
     }
     createCollection(input) {
-        return this.collectionService.createCollection(input);
+        return this.createCollectionService.createCollection(input);
     }
     deleteCollection(input) {
-        return this.collectionService.deleteCollection(input);
+        return this.deleteCollectionService.deleteCollection(input);
     }
     updateCollection(input) {
-        return this.collectionService.updateCollection(input);
+        return this.updateCollectionService.updateCollection(input);
     }
     updateProductCollection(input) {
-        return this.collectionService.updateProductCollection(input);
+        return this.updateCollectionService.updateProductCollection(input);
     }
     getListCollection() {
-        return this.collectionService.findAllCollection();
+        return this.getCollectionService.findAllCollection();
     }
     getCollection(input) {
-        return this.collectionService.findSingleCollection(input);
+        return this.getCollectionService.findSingleCollection(input);
     }
     getCollectionTitle(input) {
-        return this.collectionService.titleCollection(input);
+        return this.getCollectionService.titleCollection(input);
     }
 };
 __decorate([
@@ -93,8 +102,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CollectionResolver.prototype, "getCollectionTitle", null);
 CollectionResolver = __decorate([
+    (0, typedi_1.Service)(),
     (0, type_graphql_1.Resolver)(),
-    __metadata("design:paramtypes", [collection_service_1.CollectionService])
+    __metadata("design:paramtypes", [createCollection_service_1.default,
+        updateCollection_service_1.default,
+        getCollection_service_1.default,
+        deleteCollection_service_1.default])
 ], CollectionResolver);
 exports.default = CollectionResolver;
 //# sourceMappingURL=collection.resolver.js.map

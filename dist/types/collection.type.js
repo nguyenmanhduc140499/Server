@@ -9,10 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CollectionTitleResponse = exports.AllCollectionResponse = exports.CollectionResponse = void 0;
+exports.CollectionTitleResponse = exports.AllCollectionResponse = exports.CollectionResponse = exports.UpdateProductFlagEnum = void 0;
 const type_graphql_1 = require("type-graphql");
 const collection_1 = require("../model/collection");
 const response_type_1 = require("./response.type");
+var UpdateProductFlagEnum;
+(function (UpdateProductFlagEnum) {
+    UpdateProductFlagEnum["ADD"] = "ADD";
+    UpdateProductFlagEnum["REMOVE"] = "REMOVE";
+})(UpdateProductFlagEnum = exports.UpdateProductFlagEnum || (exports.UpdateProductFlagEnum = {}));
 let CollectionResponse = class CollectionResponse extends response_type_1.IResponse {
 };
 __decorate([
