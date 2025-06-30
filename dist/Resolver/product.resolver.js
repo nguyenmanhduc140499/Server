@@ -11,40 +11,51 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const type_graphql_1 = require("type-graphql");
 const productInput_1 = require("../Input/productInput");
-const product_service_1 = require("../Service/product.service");
 const product_type_1 = require("../types/product.type");
 const response_type_1 = require("../types/response.type");
+const activeProduct_service_1 = __importDefault(require("../Service/productServices/activeProduct.service"));
+const createProduct_service_1 = __importDefault(require("../Service/productServices/createProduct.service"));
+const deleteProduct_service_1 = __importDefault(require("../Service/productServices/deleteProduct.service"));
+const getProduct_service_1 = __importDefault(require("../Service/productServices/getProduct.service"));
+const updateProduct_service_1 = __importDefault(require("../Service/productServices/updateProduct.service"));
+const typedi_1 = require("typedi");
 let ProductResolver = class ProductResolver {
-    constructor(productService) {
-        this.productService = productService;
-        this.productService = new product_service_1.ProductService();
+    constructor(createProductService, updateProductService, getProductService, deleteProductService, activeProductService) {
+        this.createProductService = createProductService;
+        this.updateProductService = updateProductService;
+        this.getProductService = getProductService;
+        this.deleteProductService = deleteProductService;
+        this.activeProductService = activeProductService;
     }
     createProduct(input) {
-        return this.productService.createProduct(input);
+        return this.createProductService.createProduct(input);
     }
     updateProduct(input) {
-        return this.productService.updateProduct(input);
+        return this.updateProductService.updateProduct(input);
     }
     deleteProduct(input) {
-        return this.productService.deleteProduct(input);
+        return this.deleteProductService.deleteProduct(input);
     }
     activeProduct(input) {
-        return this.productService.activeProduct(input);
+        return this.activeProductService.activeProduct(input);
     }
     getListProduct() {
-        return this.productService.findAllProduct();
+        return this.getProductService.findAllProduct();
     }
     getProductDetail(input) {
-        return this.productService.getProductDetail(input);
+        return this.getProductService.getProductDetail(input);
     }
     searchProduct(query) {
-        return this.productService.findProductByQuery(query);
+        return this.getProductService.findProductByQuery(query);
     }
     getRelatedProduct(mainProductId) {
-        return this.productService.getRelatedProduct(mainProductId);
+        return this.getProductService.getRelatedProduct(mainProductId);
     }
 };
 __decorate([
@@ -103,8 +114,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "getRelatedProduct", null);
 ProductResolver = __decorate([
+    (0, typedi_1.Service)(),
     (0, type_graphql_1.Resolver)(),
-    __metadata("design:paramtypes", [product_service_1.ProductService])
+    __metadata("design:paramtypes", [createProduct_service_1.default,
+        updateProduct_service_1.default,
+        getProduct_service_1.default,
+        deleteProduct_service_1.default,
+        activeProduct_service_1.default])
 ], ProductResolver);
 exports.default = ProductResolver;
 //# sourceMappingURL=product.resolver.js.map
