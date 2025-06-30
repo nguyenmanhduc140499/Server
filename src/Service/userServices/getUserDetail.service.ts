@@ -30,7 +30,6 @@ export default class GetUserService {
     }
 
     async getListUser(): Promise<AllUserResponse> {
-        console.log('345')
         try {
             const allUser = await UserModel.find().sort({ name: -1 })
             if (!allUser) {

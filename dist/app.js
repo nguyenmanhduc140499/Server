@@ -15,11 +15,13 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const mongo_1 = require("./utils/mongo");
 const http_1 = require("http");
 const cors_1 = __importDefault(require("cors"));
+const typedi_1 = __importDefault(require("typedi"));
 const main = async () => {
     //build schema
     const schema = await (0, type_graphql_1.buildSchemaSync)({
         validate: false,
         resolvers: Resolver_1.resolvers,
+        container: typedi_1.default
     });
     //init Express
     const app = (0, express_1.default)();

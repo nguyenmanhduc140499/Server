@@ -10,11 +10,8 @@ import UserWishlistService from "../Service/userServices/userWishlist.service";
 @Resolver()
 export default class UserResolver {
     constructor(
-        @Inject(() => CreateUserService)
         private readonly createUserService: CreateUserService,
-        @Inject(() => GetUserService)
         private readonly getUserService: GetUserService,
-        @Inject(() => UserWishlistService)
         private readonly userWishlistService: UserWishlistService
     ) { }
 
@@ -39,7 +36,6 @@ export default class UserResolver {
 
     @Query(() => AllUserResponse)
     getListUser(): Promise<AllUserResponse> {
-        console.log("123")
         return this.getUserService.getListUser();
     }
 }

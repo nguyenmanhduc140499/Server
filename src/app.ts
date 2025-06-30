@@ -14,12 +14,14 @@ import cookieParser from "cookie-parser";
 import { connectToMongo } from "./utils/mongo";
 import { createServer } from "http";
 import cors from "cors";
+import Container from "typedi";
 
 const main = async () => {
   //build schema
   const schema = await buildSchemaSync({
     validate: false,
     resolvers,
+    container: Container
   });
   //init Express
   const app = express();

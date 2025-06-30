@@ -34,7 +34,6 @@ let GetUserService = class GetUserService {
         }
     }
     async getListUser() {
-        console.log('345');
         try {
             const allUser = await user_1.UserModel.find().sort({ name: -1 });
             if (!allUser) {

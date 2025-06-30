@@ -38,7 +38,6 @@ let UserResolver = class UserResolver {
         return this.getUserService.getUserDetail(input);
     }
     getListUser() {
-        console.log("123");
         return this.getUserService.getListUser();
     }
 };
@@ -72,9 +71,6 @@ __decorate([
 UserResolver = __decorate([
     (0, typedi_1.Service)(),
     (0, type_graphql_1.Resolver)(),
-    __param(0, (0, typedi_1.Inject)(() => createUser_service_1.default)),
-    __param(1, (0, typedi_1.Inject)(() => getUserDetail_service_1.default)),
-    __param(2, (0, typedi_1.Inject)(() => userWishlist_service_1.default)),
     __metadata("design:paramtypes", [createUser_service_1.default,
         getUserDetail_service_1.default,
         userWishlist_service_1.default])
