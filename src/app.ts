@@ -15,6 +15,7 @@ import { connectToMongo } from "./utils/mongo";
 import { createServer } from "http";
 import cors from "cors";
 import Container from "typedi";
+import { errorHandler } from "./Middleware/errors.middleware";
 
 const main = async () => {
   //build schema
@@ -25,6 +26,7 @@ const main = async () => {
   });
   //init Express
   const app = express();
+  app.use(errorHandler)
   app.options("*", cors()); // Allow preflight requests for all routes
   app.use(
     cors({

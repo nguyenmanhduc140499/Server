@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "dist/app.js",
   "type": "modules",
-  "scripts": {
-    "start": "set NODE_ENV=development && nodemon dist/app.js",
-    "build": "tsc",
-    "dev": "set NODE_ENV=development && tsc --watch & nodemon dist/app.js"
-  },
+"scripts": {
+  "start": "nodemon ts-node src/app.ts",
+  "dev": "nodemon --watch src --exec ts-node src/app.ts",
+  "build": "tsc"
+},
   "license": "MIT",
   "dependencies": {
     "@apollo/server": "^4.7.1",
@@ -33,6 +33,7 @@
     "mongoose": "^7.1.0",
     "nexus": "^1.3.0",
     "npm-watch": "^0.13.0",
+    "ts-node": "^10.9.2",
     "tslint": "^6.1.3",
     "type-graphql": "^1.1.1",
     "typedi": "^0.10.0",
