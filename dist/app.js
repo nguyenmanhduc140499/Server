@@ -16,6 +16,7 @@ const mongo_1 = require("./utils/mongo");
 const http_1 = require("http");
 const cors_1 = __importDefault(require("cors"));
 const typedi_1 = __importDefault(require("typedi"));
+const errors_middleware_1 = require("./Middleware/errors.middleware");
 const main = async () => {
     //build schema
     const schema = await (0, type_graphql_1.buildSchemaSync)({
@@ -25,6 +26,7 @@ const main = async () => {
     });
     //init Express
     const app = (0, express_1.default)();
+    app.use(errors_middleware_1.errorHandler);
     app.options("*", (0, cors_1.default)()); // Allow preflight requests for all routes
     app.use((0, cors_1.default)({
         origin: [

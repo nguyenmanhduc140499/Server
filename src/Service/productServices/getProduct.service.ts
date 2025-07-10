@@ -16,6 +16,7 @@ export default class GetProductService {
                 success: false,
             };
         }
+
         return {
             code: 200,
             success: true,

@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-node",                        // Debug với VS Code (PWA engine)
+      "request": "launch",                       // Kiểu launch (khởi động app)
+      "name": "Debug Express TypeScript",        // Tên cấu hình
+      "skipFiles": ["<node_internals>/**"],      // Bỏ qua file nội bộ của Node
+      "program": "${workspaceFolder}/src/app.ts", // Entry point của app
+      "cwd": "${workspaceFolder}",               // Current working directory
+      "runtimeArgs": ["-r", "ts-node/register"], // Dùng ts-node để chạy file .ts
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  ]
+}
